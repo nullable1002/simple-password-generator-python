@@ -4,11 +4,9 @@ from random import sample
 import sys
 
 def generate_password(characters_sequence, password_length):
-
 	return "".join(sample(characters_sequence, password_length))
 	
 def main():
-
 	lower = "abcdefghijklmnopqrstuvwxyz"
 	upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	numbers = "0123456789"
@@ -25,5 +23,4 @@ def main():
 	print("password generated: ", password)
 
 if __name__ == "__main__":
-
 	main()
