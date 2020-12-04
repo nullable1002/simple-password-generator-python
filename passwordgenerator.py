@@ -15,7 +15,7 @@ def main():
 	characters = lower + upper + numbers + symbols
 	try:
 		length = int(input("Enter the length of the password: "))
-	except:
+	except ValueError:
 		sys.exit("Error: Invalid input")
 	
 	password = generate_password(characters, length)
