@@ -8,7 +8,12 @@ def generate_password(characters_sequence, password_length) -> str:
 
 def get_password_length() -> int:
 	try:
-		length = int(input("Enter the length of the password: "))
+		while True:
+			length = int(input("Enter the length of the password: "))
+			if length < 0:
+				print("[!] Error: password's length can not be less than 0")
+			else:
+				break
 	except ValueError:
 		sys.exit("[!] Error: Invalid input")
 	return length
