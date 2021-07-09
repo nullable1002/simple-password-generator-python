@@ -1,31 +1,40 @@
 #! /usr/bin/env python3
+# -*- encoding: utf-8 -*-
 
-from random import sample
 import sys
+import random
+import argparse
 
-def generate_password(characters_sequence, password_length) -> str:
-	return str().join(sample(characters_sequence, password_length))
+def parse_args() -> int:
+	parser = argparse.ArgumentParser()
 
-def handle_exception():
-	sys.exit("[!] Error: Invalid input")
+	parser.add_argument(
+		'-l', '--length',
+		help='The length of the password to generate'
+	)
 
-def get_valid_length() -> int:
-	while True:
-		length = int(input("Enter the length of the password: "))
-		if length < 0:
-			print("[!] Error: password's length can not be less than 0")
-		else:
-			break
-	return length
+	args = parser.parse_args()
 
-def get_password_length() -> int:
-	try:
-		length = get_valid_length()
-	except ValueError:
-		handle_exception()
-	return length
+	if args.length is not None:
+		try:
+			return int(args.length)
+		except Exception as e:
+			print(e.message if hasattr(e, 'message') else e)
+			sys.exit(1)
+	else:
+		print('Error: something went wrong during the parsing of the arguments, aborting')
+		sys.exit(1)
+
+def generate_password(characters_sequence: str, password_length: int) -> str:
+	return str().join(random.sample(characters_sequence, password_length))
 
 def main():
+	length = parse_args()
+
+	if length < 1:
+		print('Error: password\'s length can not be less than 1')
+		sys.exit(1)
+
 	lower = "abcdefghijklmnopqrstuvwxyz"
 	upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	numbers = "0123456789"
@@ -33,10 +42,10 @@ def main():
 
 	password = generate_password(
 		lower + upper + numbers + symbols,
-		get_password_length()
+		length
 	)
 
-	print("password generated:", password)
+	print(password)
 
 if __name__ == "__main__":
 	main()
